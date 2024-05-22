@@ -1,9 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy.integrate import quad
 
 # Parâmetros da circunferência
 R = 5  # Raio da circunferência
-a = -1  # Limite esquerdo da tira
+a = -2  # Limite esquerdo da tira
 b = 2   # Limite direito da tira
 
 # Valores de x e y para a circunferência
@@ -31,9 +32,9 @@ plt.plot(x, y, label='Circunferência')
 plt.fill_between(x_tira, y_tira_lower, y_tira_upper, color='lightblue', alpha=0.5, label='Tira vertical')
 
 # Configurações do gráfico
-plt.axhline(0, color='black',linewidth=0.5)
-plt.axvline(0, color='black',linewidth=0.5)
-plt.grid(color = 'gray', linestyle = '--', linewidth = 0.5)
+plt.axhline(0, color='black', linewidth=0.5)
+plt.axvline(0, color='black', linewidth=0.5)
+plt.grid(color='gray', linestyle='--', linewidth=0.5)
 plt.gca().set_aspect('equal', adjustable='box')
 plt.xlim(-R-1, R+1)
 plt.ylim(-R-1, R+1)
@@ -42,3 +43,10 @@ plt.xlabel('x')
 plt.ylabel('y')
 plt.legend()
 plt.show()
+
+# Calcular a área da tira vertical
+def integrand(x):
+    return 2 * np.sqrt(R**2 - x**2)
+
+area, error = quad(integrand, a, b)
+print(f'A área da tira vertical é: {area:.4f} unidades quadradas')
